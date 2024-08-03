@@ -1,4 +1,5 @@
-﻿using OrderTrackingSystem.Core.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using OrderTrackingSystem.Core.Entities;
 using OrderTrackingSystem.Core.Interfaces;
 using OrderTrackingSystem.Infrastructure.Data;
 using System;
@@ -16,6 +17,14 @@ namespace OrderTrackingSystem.Infrastructure.Repositories
         }
 
         // Специфічні методи для Customer
+
+        public async Task<Customer> GetCustomerWithOrdersAsync(int customerId)
+        {
+            return await _context.Customers
+                .Include(c => c.Orders)  // Завантажуємо замовлення разом з клієнтом
+                .ThenInclude(o => o.OrderItems) // Якщо потрібно завантажити і деталі замовлення
+                .FirstOrDefaultAsync(c => c.Id == customerId);
+        }
     }
 
 }

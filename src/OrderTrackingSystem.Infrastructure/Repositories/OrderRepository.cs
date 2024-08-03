@@ -16,6 +16,8 @@ namespace OrderTrackingSystem.Infrastructure.Repositories
         }
 
         // Специфічні методи для Order
+
+
     }
 
 }

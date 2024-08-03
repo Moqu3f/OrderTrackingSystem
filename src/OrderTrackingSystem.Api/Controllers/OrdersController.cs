@@ -41,8 +41,9 @@ namespace OrderTrackingSystem.Api.Controllers
         {
             await _orderRepository.AddAsync(order);
             await _unitOfWork.CompleteAsync();
-            return CreatedAtAction("GetOrder", new { id = order.Id}, order);
+            return CreatedAtAction("GetOrder", new { id = order.Id }, order);
         }
+
 
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateOrder(int id, Order order)

@@ -72,5 +72,21 @@ namespace OrderTrackingSystem.Api.Controllers
 
             return NoContent();
         }
+
+        public CustomersController(ICustomerRepository customerRepository)
+        {
+            _customerRepository = customerRepository;
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Customer>> GetCustomerWithOrdersAsync(int id)
+        {
+            var customer = await _customerRepository.GetCustomerWithOrdersAsync(id);
+            if (customer == null)
+            {
+                return NotFound();
+            }
+            return Ok(customer);
+        }
     }
 }
