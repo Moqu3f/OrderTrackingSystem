@@ -14,17 +14,19 @@ namespace OrderTrackingSystem.Infrastructure.Repositories
     {
         public CustomerRepository(OrderDbContext context) : base(context)
         {
+
         }
 
         // Специфічні методи для Customer
-
-        public async Task<Customer> GetCustomerWithOrdersAsync(int customerId)
+        public async Task<Customer?> GetCustomerWithOrdersAsync(int customerId)
         {
             return await _context.Customers
-                .Include(c => c.Orders)  // Завантажуємо замовлення разом з клієнтом
-                .ThenInclude(o => o.OrderItems) // Якщо потрібно завантажити і деталі замовлення
+                .Include(c => c.Orders)
+                .ThenInclude(o => o.OrderItems)
                 .FirstOrDefaultAsync(c => c.Id == customerId);
         }
+
+
     }
 
 }
